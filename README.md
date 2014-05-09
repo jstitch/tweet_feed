@@ -6,7 +6,7 @@ A module to integrate Twitter feeds using Views. Works with Twitter API v1.1 - a
 This module also creates linked URLs from URLs, Hash Tags and Usernames inside the feed itself.
 
 Requires:
-<b>Oauth (Oauth Common)</b>
+<b>Oauth (Oauth Common)</b><br />
 <b>Views</b>
 
 This module exists thanks to the generous support of <a href="http://highwire.org">HighWire Press</a> and <a href="http://stanford.edu">Stanford University</a>
