@@ -95,7 +95,6 @@ function tweet_feed_settings_form($form,&$form_state) {
   $form['tweet_feed_query_settings']['tweet_feed_search_query'] = array(
     '#type' => 'textfield',
     '#title' => t('Twitter Search Query'),
-    '#description' => t('Use only if you selected the <b>Twitter Search</b> option above'),
     '#max_length' => 255,
     '#default_value' => variable_get('tweet_feed_search_query',NULL),
     '#states' => array(
@@ -107,7 +106,6 @@ function tweet_feed_settings_form($form,&$form_state) {
   $form['tweet_feed_query_settings']['tweet_feed_user_id'] = array(
     '#type' => 'textfield',
     '#title' => t('Exact Twitter User ID For Timline Query'),
-    '#description' => t('Use only if you selected the <b>Twitter Search</b> option above'),
     '#max_length' => 255,
     '#default_value' => variable_get('tweet_feed_user_id',NULL),
     '#states' => array(
