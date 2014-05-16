@@ -84,7 +84,7 @@ function tweet_feed_views_data() {
           'handler' => 'views_handler_field',
         ),
         'argument' => array(
-          'handler' => 'views_handler_argument_string',
+          'handler' => 'views_handler_argument_hashtag',
         ),
       ),
     ),
@@ -95,6 +95,7 @@ function tweet_feed_views_data() {
  * override views_handler_field::render so that it does not sanitize our URL's and other links
  */
 class views_handler_tweet_field extends views_handler_field {
+
   function render($values) {
     $tweet = $this->get_value($values);
 
@@ -113,5 +114,69 @@ class views_handler_tweet_field extends views_handler_field {
     
     $tweet = utf8_encode($tweet);
     return htmlspecialchars_decode($tweet);
+  }
+  
+}
+
+
+class views_handler_argument_hashtag extends views_handler_argument_string {
+
+  function query($group_by = FALSE) {
+    $argument = '%' . $this->argument . '%';
+    if (!empty($this->options['transform_dash'])) {
+      $argument = strtr($argument, '-', ' ');
+    }
+
+    if (!empty($this->options['break_phrase'])) {
+      views_break_phrase_string($argument, $this);
+    }
+    else {
+      $this->value = array($argument);
+      $this->operator = 'or';
+    }
+
+    if (!empty($this->definition['many to one'])) {
+      if (!empty($this->options['glossary'])) {
+        $this->helper->formula = TRUE;
+      }
+      $this->helper->ensure_my_table();
+      $this->helper->add_filter();
+      return;
+    }
+
+    $this->ensure_my_table();
+    $formula = FALSE;
+    if (empty($this->options['glossary'])) {
+      $field = "$this->table_alias.$this->real_field";
+    }
+    else {
+      $formula = TRUE;
+      $field = $this->get_formula();
+    }
+
+    if (count($this->value) > 1) {
+      $operator = 'IN';
+      $argument = $this->value;
+    }
+    else {
+      $operator = 'LIKE';
+    }
+
+    if ($formula) {
+      $placeholder = $this->placeholder();
+      if ($operator == 'IN') {
+        $field .= " IN($placeholder)";
+      }
+      else {
+        $field .= ' = ' . $placeholder;
+      }
+      $placeholders = array(
+        $placeholder => $argument,
+      );
+      $this->query->add_where_expression(0, $field, $placeholders);
+    }
+    else {
+      $this->query->add_where(0, $field, $argument, $operator);
+    }
   }
 }
