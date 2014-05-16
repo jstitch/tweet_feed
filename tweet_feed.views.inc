@@ -72,9 +72,19 @@ function tweet_feed_views_data() {
       ),
       'screen_name' => array(
         'title' => t('Screen Name'),
-        'help' => t('Thre screen name of the tweeter.'),
+        'help' => t('The screen name of the tweeter.'),
         'field' => array(
           'handler' => 'views_handler_field',
+        ),
+      ),
+      'hashtags' => array(
+        'title' => t('Hashtags'),
+        'help' => t('The Hashtags associated with a tweet.'),
+        'field' => array(
+          'handler' => 'views_handler_field',
+        ),
+        'argument' => array(
+          'handler' => 'views_handler_argument_string',
         ),
       ),
     ),
