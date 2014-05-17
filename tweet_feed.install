@@ -41,7 +41,7 @@ function tweet_feed_schema() {
         'description' => 'A comma separated list of hashtags without the hash.',
         'type' => 'varchar',
         'length' => 255,
-        'not null' => TRUE),
+        'not null' => FALSE),
     ),
     'primary key' => array('tid'),
   );
