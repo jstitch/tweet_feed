@@ -182,7 +182,7 @@ function tweet_feed_cron() {
           $tweet_html = tweet_feed_format_output($tweet->text);
           $hashtags = tweet_feed_get_hashtags($tweet->entities->hashtags);
           $data = array(
-            'tweet' => utf8_encode($tweet_html),
+            'tweet' => utf8_decode($tweet_html),
             'created_at' => $creation_timestamp,
             'user_id' => $tweet->user->id,
             'profile_image_url' => $tweet->user->profile_image_url,
@@ -198,7 +198,7 @@ function tweet_feed_cron() {
           $tweet_html = tweet_feed_format_output($tweet->text);
           $hashtags = tweet_feed_get_hashtags($tweet->entities->hashtags);
           $data = array(
-            'tweet' => utf8_encode($tweet_html),
+            'tweet' => utf8_decode($tweet_html),
             'created_at' => $creation_timestamp,
             'user_id' => $tweet->user->id,
             'profile_image_url' => $tweet->user->profile_image_url,
